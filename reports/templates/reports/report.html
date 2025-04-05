@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fitness Report</title>
+</head>
+<body>
+    <h1>Fitness Report for {{ report.user.username }}</h1>
+<p><strong>BMI:</strong> {{ report.bmi }}</p>
+<p><strong>Body Fat %:</strong> {{ report.body_fat_percentage }}</p>
+<p><strong>Waist-to-Hip Ratio:</strong> {{ report.waist_to_hip_ratio }}</p>
+<hr>
+<h3>AI Suggestions</h3>
+<p>{{ report.ai_suggestions }}</p>
+
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Report</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url('https://source.unsplash.com/1600x900/?fitness,gym') no-repeat center center/cover;
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #FFD700;
+        }
+        button {
+            width: 100%;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #FF5733;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #FF4500;
+        }
+        .btn-secondary {
+            background-color: #333;
+            border: none;
+        }
+        .btn-secondary:hover {
+            background-color: #555;
+        }
+        .ai-suggestions {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+    </style>
+    <script>
+        function startWorkout() {
+            let workoutType = prompt("Enter workout type (sit-up, pull-up, push-up, squat, walk):");
+            if (workoutType) {
+                fetch('/start-workout/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: 'workout_type=' + workoutType
+                })
+                .then(response => response.json())
+                .then(data => alert(data.message || data.error))
+                .catch(error => console.error("Error:", error));
+            }
+        }
+    </script>
+</head>
+<body>
+    
+
+    <div class="container">
+        <a href="https://www.stack-ai.com/chat/67ecc8769b2ec97c5dee7b2d-1R0xsWb3MWO0CX6GSsfZQN" 
+    target="_blank" 
+    class="btn btn-primary">
+    🧠 Mental Health Assistant
+    </a>
+        <h2>Generate Fitness Report</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="btn btn-primary">Generate AI Suggestions</button>
+        </form>
+        <br>
+        <button class="btn btn-secondary" onclick="startWorkout()">Track Workout</button>
+        <br><br>
+        
+        {% if ai_suggestions %}
+            <h3 class="text-warning">AI Suggestions:</h3>
+            <div class="ai-suggestions">
+                {{ ai_suggestions|safe }}
+            </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>

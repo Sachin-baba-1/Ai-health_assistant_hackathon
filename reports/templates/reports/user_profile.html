@@ -1,0 +1,10 @@
+{% extends "reports/base.html" %}
+{% block content %}
+<h2>Enter Your Fitness Details</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <a href="{% url 'generate_report' %}" class="btn btn-success mt-3">Generate Fitness Report</a>
+
+</form>
+{% endblock %}
